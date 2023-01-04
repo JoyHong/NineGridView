@@ -27,26 +27,26 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class NewsActivity extends AppCompatActivity {
 
-    @Bind(R.id.tab) PagerSlidingTabStrip tab;
-    @Bind(R.id.viewPager) ViewPager viewPager;
+    private PagerSlidingTabStrip tab;
+    private ViewPager viewPager;
     private View emptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        ButterKnife.bind(this);
 
         emptyView = View.inflate(this, R.layout.item_empty, null);
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         addContentView(emptyView, params);
+
+        tab = (PagerSlidingTabStrip) findViewById(R.id.tab);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         OkHttpUtils.get(Urls.CHANNEL)//
                 .tag(this)//

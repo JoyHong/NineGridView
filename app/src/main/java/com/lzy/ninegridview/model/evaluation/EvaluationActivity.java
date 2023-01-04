@@ -18,8 +18,6 @@ import com.lzy.okhttputils.model.HttpParams;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -28,8 +26,8 @@ import okhttp3.Response;
 
 public class EvaluationActivity extends AppCompatActivity {
 
-    @Bind(R.id.ptr) PtrClassicFrameLayout ptr;
-    @Bind(R.id.listView) ListView listView;
+    private PtrClassicFrameLayout ptr;
+    private ListView listView;
 
     private EvaluationAdapter mAdapter;
     private ArrayList<EvaluationItem> data;
@@ -39,7 +37,9 @@ public class EvaluationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluation);
-        ButterKnife.bind(this);
+
+        ptr = (PtrClassicFrameLayout) findViewById(R.id.ptr);
+        listView = (ListView) findViewById(R.id.listView);
 
         View emptyView = View.inflate(this, R.layout.item_empty, null);
         addContentView(emptyView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

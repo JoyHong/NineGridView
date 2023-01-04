@@ -24,18 +24,14 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, RadioGroup.OnCheckedChangeListener {
 
-    @Bind(R.id.frame) RadioGroup frame;
+    private RadioGroup frame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
         ArrayList<String> strings = new ArrayList<>();
         strings.add("使用RecyclerView展示news");
@@ -45,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, strings));
         listView.setOnItemClickListener(this);
 
+        frame = (RadioGroup) findViewById(R.id.frame);
         frame.setOnCheckedChangeListener(this);
         frame.check(R.id.picasso);
     }

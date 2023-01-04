@@ -27,8 +27,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -46,8 +44,8 @@ import okhttp3.Response;
  */
 public class NewsFragment extends Fragment {
 
-    @Bind(R.id.ptr) PtrClassicFrameLayout ptr;
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    private PtrClassicFrameLayout ptr;
+    private RecyclerView recyclerView;
 
     private List<NewsContent> newsContentList;
     private NewsContentAdapter mAdapter;
@@ -58,18 +56,19 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-        ButterKnife.bind(this, view);
 
         Bundle bundle = getArguments();
         channelId = bundle.getString("channelId");
         page = bundle.getInt("page");
 
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new NewsContentAdapter(getActivity(), new ArrayList<NewsContent>());
         recyclerView.setAdapter(mAdapter);
 
         initData(false);
 
+        ptr = (PtrClassicFrameLayout) view.findViewById(R.id.ptr);
         ptr.setLastUpdateTimeRelateObject(this);
         ptr.setPtrHandler(new PtrDefaultHandler() {
             @Override

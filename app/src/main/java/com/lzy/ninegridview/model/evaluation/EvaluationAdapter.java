@@ -20,21 +20,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.lzy.ninegrid.ImageInfo;
+import com.lzy.ninegrid.NineGridView;
+import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
 import com.lzy.ninegridview.R;
 import com.lzy.ninegridview.model.evaluation.bean.EvaluationItem;
 import com.lzy.ninegridview.model.evaluation.bean.EvaluationPic;
 import com.lzy.ninegridview.utils.GlobalDialog;
-import com.lzy.ninegrid.ImageInfo;
-import com.lzy.ninegrid.NineGridView;
-import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
 import com.lzy.widget.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * ================================================
@@ -122,13 +119,13 @@ public class EvaluationAdapter extends BaseAdapter {
     }
 
     class ViewHolder implements View.OnClickListener {
-        @Bind(R.id.tv_content) TextView content;
-        @Bind(R.id.nineGrid) NineGridView nineGrid;
-        @Bind(R.id.tv_username) TextView username;
-        @Bind(R.id.tv_createTime) TextView createTime;
-        @Bind(R.id.rb_grade) RatingBar grade;
-        @Bind(R.id.avatar) CircleImageView avatar;
-        @Bind(R.id.lv_comments) ListView comments;
+        private TextView content;
+        private NineGridView nineGrid;
+        private TextView username;
+        private TextView createTime;
+        private RatingBar grade;
+        private CircleImageView avatar;
+        private ListView comments;
 
         private PopupWindow window;
         private PopupWindow editWindow;
@@ -136,48 +133,57 @@ public class EvaluationAdapter extends BaseAdapter {
 
         public ViewHolder(View convertView) {
             rootView = convertView;
-            ButterKnife.bind(this, convertView);
-        }
+            content = (TextView) convertView.findViewById(R.id.tv_content);
+            nineGrid = (NineGridView) convertView.findViewById(R.id.nineGrid);
+            username = (TextView) convertView.findViewById(R.id.tv_username);
+            createTime = (TextView) convertView.findViewById(R.id.tv_createTime);
+            grade = (RatingBar) convertView.findViewById(R.id.rb_grade);
+            avatar = (CircleImageView) convertView.findViewById(R.id.avatar);
+            comments = (ListView) convertView.findViewById(R.id.lv_comments);
 
-        @OnClick(R.id.more)
-        public void more(View view) {
-            View popupView = mInflater.inflate(R.layout.popup_reply, null);
-            popupView.findViewById(R.id.favour).setOnClickListener(this);
-            popupView.findViewById(R.id.comment).setOnClickListener(this);
-            window = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            window.setOutsideTouchable(true);
-            window.setFocusable(true);
-            window.setAnimationStyle(R.style.popup_more_anim);
-            window.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-            popupView.measure(0, 0);
-            int xoff = -popupView.getMeasuredWidth();
-            int yoff = -(popupView.getMeasuredHeight() + view.getHeight()) / 2;
-            window.showAsDropDown(view, xoff, yoff);
-        }
-
-        @OnClick(R.id.delete)
-        public void delete(View view) {
-            final GlobalDialog delDialog = new GlobalDialog(context);
-            delDialog.setCanceledOnTouchOutside(true);
-            delDialog.getTitle().setText("提示");
-            delDialog.getContent().setText("确定删除吗?");
-            delDialog.setLeftBtnText("取消");
-            delDialog.setRightBtnText("确定");
-            delDialog.setLeftOnclick(new View.OnClickListener() {
+            convertView.findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "取消", Toast.LENGTH_SHORT).show();
-                    delDialog.dismiss();
+                public void onClick(View view) {
+                    View popupView = mInflater.inflate(R.layout.popup_reply, null);
+                    popupView.findViewById(R.id.favour).setOnClickListener(this);
+                    popupView.findViewById(R.id.comment).setOnClickListener(this);
+                    window = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    window.setOutsideTouchable(true);
+                    window.setFocusable(true);
+                    window.setAnimationStyle(R.style.popup_more_anim);
+                    window.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                    popupView.measure(0, 0);
+                    int xoff = -popupView.getMeasuredWidth();
+                    int yoff = -(popupView.getMeasuredHeight() + view.getHeight()) / 2;
+                    window.showAsDropDown(view, xoff, yoff);
                 }
             });
-            delDialog.setRightOnclick(new View.OnClickListener() {
+            convertView.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "确定", Toast.LENGTH_SHORT).show();
-                    delDialog.dismiss();
+                public void onClick(View view) {
+                    final GlobalDialog delDialog = new GlobalDialog(context);
+                    delDialog.setCanceledOnTouchOutside(true);
+                    delDialog.getTitle().setText("提示");
+                    delDialog.getContent().setText("确定删除吗?");
+                    delDialog.setLeftBtnText("取消");
+                    delDialog.setRightBtnText("确定");
+                    delDialog.setLeftOnclick(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(context, "取消", Toast.LENGTH_SHORT).show();
+                            delDialog.dismiss();
+                        }
+                    });
+                    delDialog.setRightOnclick(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(context, "确定", Toast.LENGTH_SHORT).show();
+                            delDialog.dismiss();
+                        }
+                    });
+                    delDialog.show();
                 }
             });
-            delDialog.show();
         }
 
         @Override

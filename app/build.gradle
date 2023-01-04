@@ -22,7 +22,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:24.2.1'
     implementation 'com.android.support:recyclerview-v7:24.2.1'
-    implementation 'com.jakewharton:butterknife:7.0.1'
     implementation 'com.google.code.gson:gson:2.6.2'
     implementation 'in.srain.cube:ultra-ptr:1.0.11'
     implementation 'com.lzy.net:okhttputils:1.5.2'

@@ -15,9 +15,6 @@ import com.lzy.ninegridview.model.evaluation.bean.EvaluationReply;
 
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 /**
  * ================================================
  * 作    者：廖子尧
@@ -66,10 +63,10 @@ public class CommentsAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.tv_reply) TextView reply;
+        private TextView reply;
 
         public ViewHolder(View convertView) {
-            ButterKnife.bind(this, convertView);
+            reply = (TextView) convertView.findViewById(R.id.tv_reply);
         }
     }
 }

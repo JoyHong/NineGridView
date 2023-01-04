@@ -8,18 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.lzy.ninegridview.R;
-import com.lzy.ninegridview.model.news.bean.NewsContent;
-import com.lzy.ninegridview.model.news.bean.NewsImage;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
 import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
+import com.lzy.ninegridview.R;
+import com.lzy.ninegridview.model.news.bean.NewsContent;
+import com.lzy.ninegridview.model.news.bean.NewsImage;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * ================================================
@@ -63,18 +60,22 @@ public class NewsContentAdapter extends RecyclerView.Adapter<NewsContentAdapter.
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.title) TextView title;
-        @Bind(R.id.nineGrid) NineGridView nineGrid;
-        @Bind(R.id.desc) TextView desc;
-        @Bind(R.id.pubDate) TextView pubDate;
-        @Bind(R.id.source) TextView source;
+        private TextView title;
+        private NineGridView nineGrid;
+        private TextView desc;
+        private TextView pubDate;
+        private TextView source;
         private NewsContent item;
         private View itemView;
 
         public PostViewHolder(View itemView) {
             super(itemView);
             this.itemView = itemView;
-            ButterKnife.bind(this, itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            nineGrid = (NineGridView) itemView.findViewById(R.id.nineGrid);
+            desc = (TextView) itemView.findViewById(R.id.desc);
+            pubDate = (TextView) itemView.findViewById(R.id.pubDate);
+            source = (TextView) itemView.findViewById(R.id.source);
         }
 
         public void bind(NewsContent item) {
