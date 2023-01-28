@@ -19,20 +19,22 @@ public abstract class NineGridViewAdapter<T> {
     /**
      * 绑定更新视图
      * @param adapter     适配器
-     * @param view        当前点击图片的控件
+     * @param imageView   当前点击图片的控件
      * @param position    当前点击图片的的索引
+     * @param imageInfo   当前的图片数据集
      */
-    protected void onImageItemBind(NineGridViewAdapter<T> adapter, View view, int position) {
+    protected void onImageItemBind(NineGridViewAdapter<T> adapter, ImageView imageView, int position, List<T> imageInfo) {
     }
 
     /**
      * 如果要实现图片点击的逻辑，重写此方法即可
      *
      * @param adapter      适配器
-     * @param view         当前点击图片的控件
+     * @param imageView    当前点击图片的控件
      * @param position     当前点击图片的的索引
+     * @param imageInfo   当前的图片数据集
      */
-    protected void onImageItemClick(NineGridViewAdapter<T> adapter, View view, int position) {
+    protected void onImageItemClick(NineGridViewAdapter<T> adapter, ImageView imageView, int position, List<T> imageInfo) {
     }
 
     /**

@@ -30,6 +30,7 @@ public class NineGridView extends ViewGroup {
     private int gridHeight;     // 宫格高度
 
     private List<ImageView> imageViews;
+    private List<ImageInfo> mImageInfo;
     private NineGridViewAdapter mAdapter;
 
     public NineGridView(Context context) {
@@ -64,8 +65,8 @@ public class NineGridView extends ViewGroup {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = 0;
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
-        if (mAdapter != null && mAdapter.getImageInfo().size() > 0) {
-            if (mAdapter.getImageInfo().size() == 1) {
+        if (mImageInfo != null && mImageInfo.size() > 0) {
+            if (mImageInfo.size() == 1) {
                 gridWidth = singleImageSize > totalWidth ? totalWidth : singleImageSize;
                 gridHeight = (int) (gridWidth / singleImageRatio);
                 //矫正图片显示区域大小，不允许超过最大显示范围
@@ -87,8 +88,8 @@ public class NineGridView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (mAdapter == null) return;
-        int childrenCount = mAdapter.getImageInfo().size();
+        if (mImageInfo == null) return;
+        int childrenCount = mImageInfo.size();
         for (int i = 0; i < childrenCount; i++) {
             ImageView childrenView = (ImageView) getChildAt(i);
             
@@ -100,7 +101,7 @@ public class NineGridView extends ViewGroup {
             int bottom = top + gridHeight;
             childrenView.layout(left, top, right, bottom);
 
-            mAdapter.onImageItemBind(mAdapter, childrenView, i);
+            mAdapter.onImageItemBind(mAdapter, childrenView, i, mImageInfo);
         }
     }
 
@@ -134,14 +135,14 @@ public class NineGridView extends ViewGroup {
         }
 
         //保证View的复用，避免重复创建
-        if (mAdapter == null) {
+        if (mImageInfo == null) {
             for (int i = 0; i < imageCount; i++) {
                 ImageView iv = getImageView(i);
                 if (iv == null) return;
                 addView(iv, generateDefaultLayoutParams());
             }
         } else {
-            int oldViewCount = mAdapter.getImageInfo().size();
+            int oldViewCount = mImageInfo.size();
             int newViewCount = imageCount;
             if (oldViewCount > newViewCount) {
                 removeViews(newViewCount, oldViewCount - newViewCount);
@@ -161,6 +162,7 @@ public class NineGridView extends ViewGroup {
                 imageView.setMoreNum(adapter.getImageInfo().size() - maxImageSize);
             }
         }
+        mImageInfo = imageInfo;
         requestLayout();
     }
 
@@ -174,7 +176,7 @@ public class NineGridView extends ViewGroup {
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAdapter.onImageItemClick(mAdapter, v, position);
+                    mAdapter.onImageItemClick(mAdapter, (ImageView) v, position, mAdapter.getImageInfo());
                 }
             });
             imageViews.add(imageView);
