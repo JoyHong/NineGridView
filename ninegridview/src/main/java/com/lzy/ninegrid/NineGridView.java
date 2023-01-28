@@ -75,13 +75,8 @@ public class NineGridView extends ViewGroup {
                     gridWidth = (int) (gridWidth * ratio);
                     gridHeight = singleImageSize;
                 }
-            } else if (mImageInfo.size() == 2 || mImageInfo.size() == 4) {
-                // 宽高按总宽度的 1/2
-                gridWidth = gridHeight = (totalWidth - gridSpacing) / 2;
             } else {
-//                gridWidth = gridHeight = (totalWidth - gridSpacing * (columnCount - 1)) / columnCount;
-                //这里无论是几张图片，宽高都按总宽度的 1/3
-                gridWidth = gridHeight = (totalWidth - gridSpacing * 2) / 3;
+                gridWidth = gridHeight = (totalWidth - gridSpacing * (columnCount - 1)) / columnCount;
             }
             width = gridWidth * columnCount + gridSpacing * (columnCount - 1) + getPaddingLeft() + getPaddingRight();
             height = gridHeight * rowCount + gridSpacing * (rowCount - 1) + getPaddingTop() + getPaddingBottom();
