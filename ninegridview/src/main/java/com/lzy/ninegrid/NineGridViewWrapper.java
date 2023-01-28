@@ -6,13 +6,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
-
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.view.ViewCompat;
 
 public class NineGridViewWrapper extends AppCompatImageView {
 
