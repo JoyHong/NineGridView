@@ -1,30 +1,38 @@
 package com.lzy.ninegrid;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.ImageView;
 
-import java.io.Serializable;
 import java.util.List;
 
-public abstract class NineGridViewAdapter implements Serializable {
+public abstract class NineGridViewAdapter<T> {
 
     protected Context context;
-    private List<ImageInfo> imageInfo;
+    private List<T> imageInfo;
 
-    public NineGridViewAdapter(Context context, List<ImageInfo> imageInfo) {
+    public NineGridViewAdapter(Context context, List<T> imageInfo) {
         this.context = context;
         this.imageInfo = imageInfo;
     }
 
     /**
+     * 绑定更新视图
+     * @param adapter     适配器
+     * @param view        当前点击图片的控件
+     * @param position    当前点击图片的的索引
+     */
+    protected void onImageItemBind(NineGridViewAdapter adapter, View view, int position) {
+    }
+
+    /**
      * 如果要实现图片点击的逻辑，重写此方法即可
      *
-     * @param context      上下文
-     * @param nineGridView 九宫格控件
-     * @param index        当前点击图片的的索引
-     * @param imageInfo    图片地址的数据集合
+     * @param adapter      适配器
+     * @param view         当前点击图片的控件
+     * @param position     当前点击图片的的索引
      */
-    protected void onImageItemClick(Context context, NineGridView nineGridView, int index, List<ImageInfo> imageInfo) {
+    protected void onImageItemClick(NineGridViewAdapter adapter, View view, int position) {
     }
 
     /**
@@ -41,11 +49,11 @@ public abstract class NineGridViewAdapter implements Serializable {
         return imageView;
     }
 
-    public List<ImageInfo> getImageInfo() {
+    public List<T> getImageInfo() {
         return imageInfo;
     }
 
-    public void setImageInfoList(List<ImageInfo> imageInfo) {
+    public void setImageInfoList(List<T> imageInfo) {
         this.imageInfo = imageInfo;
     }
 }

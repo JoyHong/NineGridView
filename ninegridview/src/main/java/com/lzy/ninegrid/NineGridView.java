@@ -18,8 +18,6 @@ public class NineGridView extends ViewGroup {
     public static final int MODE_FILL = 0;          //填充模式，类似于微信
     public static final int MODE_GRID = 1;          //网格模式，类似于QQ，4张图会 2X2布局
 
-    private static ImageLoader mImageLoader;        //全局的图片加载器(必须设置,否者不显示图片)
-
     private int singleImageSize = 250;              // 单张图片时的最大大小,单位dp
     private float singleImageRatio = 1.0f;          // 单张图片的宽高比(宽/高)
     private int maxImageSize = 9;                   // 最大显示的图片数
@@ -32,7 +30,6 @@ public class NineGridView extends ViewGroup {
     private int gridHeight;     // 宫格高度
 
     private List<ImageView> imageViews;
-    private List<ImageInfo> mImageInfo;
     private NineGridViewAdapter mAdapter;
 
     public NineGridView(Context context) {
@@ -67,8 +64,8 @@ public class NineGridView extends ViewGroup {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = 0;
         int totalWidth = width - getPaddingLeft() - getPaddingRight();
-        if (mImageInfo != null && mImageInfo.size() > 0) {
-            if (mImageInfo.size() == 1) {
+        if (mAdapter != null && mAdapter.getImageInfo().size() > 0) {
+            if (mAdapter.getImageInfo().size() == 1) {
                 gridWidth = singleImageSize > totalWidth ? totalWidth : singleImageSize;
                 gridHeight = (int) (gridWidth / singleImageRatio);
                 //矫正图片显示区域大小，不允许超过最大显示范围
@@ -90,8 +87,8 @@ public class NineGridView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (mImageInfo == null) return;
-        int childrenCount = mImageInfo.size();
+        if (mAdapter == null) return;
+        int childrenCount = mAdapter.getImageInfo().size();
         for (int i = 0; i < childrenCount; i++) {
             ImageView childrenView = (ImageView) getChildAt(i);
             
@@ -102,10 +99,8 @@ public class NineGridView extends ViewGroup {
             int right = left + gridWidth;
             int bottom = top + gridHeight;
             childrenView.layout(left, top, right, bottom);
-            
-            if (mImageLoader != null) {
-                mImageLoader.onDisplayImage(getContext(), childrenView, mImageInfo.get(i).thumbnailUrl);
-            }
+
+            mAdapter.onImageItemBind(mAdapter, childrenView, i);
         }
     }
 
@@ -139,14 +134,14 @@ public class NineGridView extends ViewGroup {
         }
 
         //保证View的复用，避免重复创建
-        if (mImageInfo == null) {
+        if (mAdapter == null) {
             for (int i = 0; i < imageCount; i++) {
                 ImageView iv = getImageView(i);
                 if (iv == null) return;
                 addView(iv, generateDefaultLayoutParams());
             }
         } else {
-            int oldViewCount = mImageInfo.size();
+            int oldViewCount = mAdapter.getImageInfo().size();
             int newViewCount = imageCount;
             if (oldViewCount > newViewCount) {
                 removeViews(newViewCount, oldViewCount - newViewCount);
@@ -166,7 +161,6 @@ public class NineGridView extends ViewGroup {
                 imageView.setMoreNum(adapter.getImageInfo().size() - maxImageSize);
             }
         }
-        mImageInfo = imageInfo;
         requestLayout();
     }
 
@@ -180,7 +174,7 @@ public class NineGridView extends ViewGroup {
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAdapter.onImageItemClick(getContext(), NineGridView.this, position, mAdapter.getImageInfo());
+                    mAdapter.onImageItemClick(mAdapter, v, position);
                 }
             });
             imageViews.add(imageView);
@@ -217,23 +211,4 @@ public class NineGridView extends ViewGroup {
         return maxImageSize;
     }
 
-    public static void setImageLoader(ImageLoader imageLoader) {
-        mImageLoader = imageLoader;
-    }
-
-    public static ImageLoader getImageLoader() {
-        return mImageLoader;
-    }
-
-    public interface ImageLoader {
-        /**
-         * 需要子类实现该方法，以确定如何加载和显示图片
-         *
-         * @param context   上下文
-         * @param imageView 需要展示图片的ImageView
-         * @param url       图片地址
-         */
-        void onDisplayImage(Context context, ImageView imageView, String url);
-
-    }
 }
