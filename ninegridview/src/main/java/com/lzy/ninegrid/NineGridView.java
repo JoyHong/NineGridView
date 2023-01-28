@@ -75,6 +75,9 @@ public class NineGridView extends ViewGroup {
                     gridWidth = (int) (gridWidth * ratio);
                     gridHeight = singleImageSize;
                 }
+            } else if (mImageInfo.size() == 2 || mImageInfo.size() == 4) {
+                // 宽高按总宽度的 1/2
+                gridWidth = gridHeight = (totalWidth - gridSpacing) / 2;
             } else {
 //                gridWidth = gridHeight = (totalWidth - gridSpacing * (columnCount - 1)) / columnCount;
                 //这里无论是几张图片，宽高都按总宽度的 1/3
@@ -126,9 +129,14 @@ public class NineGridView extends ViewGroup {
         //默认是3列显示，行数根据图片的数量决定
         rowCount = imageCount / 3 + (imageCount % 3 == 0 ? 0 : 1);
         columnCount = 3;
-        //grid模式下，显示4张使用2X2模式
+        // grid模式下
         if (mode == MODE_GRID) {
-            if (imageCount == 4) {
+            if (imageCount == 2) {
+                // 显示2张使用1X2模式
+                rowCount = 1;
+                columnCount = 2;
+            } else if (imageCount == 4) {
+                // 显示4张使用2X2模式
                 rowCount = 2;
                 columnCount = 2;
             }
