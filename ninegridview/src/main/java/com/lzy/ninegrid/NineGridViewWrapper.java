@@ -91,11 +91,11 @@ public class NineGridViewWrapper extends AppCompatImageView {
         return super.onTouchEvent(event);
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        setImageDrawable(null);
-    }
+//    @Override
+//    protected void onDetachedFromWindow() {
+//        super.onDetachedFromWindow();
+//        setImageDrawable(null);
+//    }
 
     public int getMoreNum() {
         return moreNum;

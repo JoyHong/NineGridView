@@ -1,7 +1,6 @@
 package com.lzy.ninegrid;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.ImageView;
 
 import java.util.List;
