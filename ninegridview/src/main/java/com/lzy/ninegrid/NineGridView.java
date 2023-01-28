@@ -101,7 +101,7 @@ public class NineGridView extends ViewGroup {
             int bottom = top + gridHeight;
             childrenView.layout(left, top, right, bottom);
 
-            mAdapter.onImageItemBind(mAdapter, childrenView, i, mImageInfo);
+            mAdapter.onImageItemBind(childrenView, i, mImageInfo);
         }
     }
 
@@ -176,7 +176,7 @@ public class NineGridView extends ViewGroup {
             imageView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAdapter.onImageItemClick(mAdapter, (ImageView) v, position, mAdapter.getImageInfo());
+                    mAdapter.onImageItemClick((ImageView) v, position, mAdapter.getImageInfo());
                 }
             });
             imageViews.add(imageView);
