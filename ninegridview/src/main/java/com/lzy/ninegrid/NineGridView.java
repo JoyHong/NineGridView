@@ -25,7 +25,7 @@ public class NineGridView extends ViewGroup {
     private float singleImageRatio = 1.0f;          // 单张图片的宽高比(宽/高)
     private int maxImageSize = 9;                   // 最大显示的图片数
     private int gridSpacing = 3;                    // 宫格间距，单位dp
-    private int mode = MODE_FILL;                   // 默认使用fill模式
+    private int mode = MODE_GRID;                   // 默认使用 grid 模式
 
     private int columnCount;    // 列数
     private int rowCount;       // 行数
@@ -187,6 +187,11 @@ public class NineGridView extends ViewGroup {
             imageViews.add(imageView);
         }
         return imageView;
+    }
+
+    /** 设置模式, 需在 setAdapter 前设置才会生效 */
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 
     /** 设置宫格间距 */
