@@ -2,7 +2,6 @@ package com.lzy.ninegrid;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -236,10 +235,5 @@ public class NineGridView extends ViewGroup {
          */
         void onDisplayImage(Context context, ImageView imageView, String url);
 
-        /**
-         * @param url 图片的地址
-         * @return 当前框架的本地缓存图片
-         */
-        Bitmap getCacheImage(String url);
     }
 }

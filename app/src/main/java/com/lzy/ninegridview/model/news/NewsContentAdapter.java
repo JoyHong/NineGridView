@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
-import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
+import com.lzy.ninegrid.NineGridViewAdapter;
 import com.lzy.ninegridview.R;
 import com.lzy.ninegridview.model.news.bean.NewsContent;
 import com.lzy.ninegridview.model.news.bean.NewsImage;
@@ -95,7 +95,8 @@ public class NewsContentAdapter extends RecyclerView.Adapter<NewsContentAdapter.
                     imageInfo.add(info);
                 }
             }
-            nineGrid.setAdapter(new NineGridViewClickAdapter(mContext, imageInfo));
+            nineGrid.setAdapter(new NineGridViewAdapter(mContext, imageInfo) {
+            });
 
             if (images != null && images.size() == 1) {
                 nineGrid.setSingleImageRatio(images.get(0).getWidth() * 1.0f / images.get(0).getHeight());

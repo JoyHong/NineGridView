@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
-import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
+import com.lzy.ninegrid.NineGridViewAdapter;
 import com.lzy.ninegridview.R;
 import com.lzy.ninegridview.model.evaluation.bean.EvaluationItem;
 import com.lzy.ninegridview.model.evaluation.bean.EvaluationPic;
@@ -99,7 +99,8 @@ public class EvaluationAdapter extends BaseAdapter {
                 imageInfo.add(info);
             }
         }
-        holder.nineGrid.setAdapter(new NineGridViewClickAdapter(context, imageInfo));
+        holder.nineGrid.setAdapter(new NineGridViewAdapter(context, imageInfo) {
+        });
 
         if (item.evaluatereplys == null) {
             holder.comments.setVisibility(View.GONE);
