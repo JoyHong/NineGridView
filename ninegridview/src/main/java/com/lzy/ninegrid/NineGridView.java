@@ -108,14 +108,14 @@ public class NineGridView extends ViewGroup {
         mAdapter = adapter;
         List<ImageInfo> imageInfo = adapter.getImageInfo();
 
-        if (imageInfo == null || imageInfo.isEmpty()) {
-            setVisibility(GONE);
-            return;
-        } else {
-            setVisibility(VISIBLE);
-        }
+//        if (imageInfo == null || imageInfo.isEmpty()) {
+//            setVisibility(GONE);
+//            return;
+//        } else {
+//            setVisibility(VISIBLE);
+//        }
 
-        int imageCount = imageInfo.size();
+        int imageCount = imageInfo != null ? imageInfo.size() : 0;
         if (maxImageSize > 0 && imageCount > maxImageSize) {
             imageInfo = imageInfo.subList(0, maxImageSize);
             imageCount = imageInfo.size();   //再次获取图片数量
